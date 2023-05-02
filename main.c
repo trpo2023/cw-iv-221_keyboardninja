@@ -5,6 +5,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "char_vector.h"
+
 #define MAX_STRING_SIZE 400
 
 void input(CharVector*, CharVector*, FILE*);
@@ -98,17 +100,22 @@ int main()
         printf("Can't open a file!\n");
         return -1;
     }
+    
+    CharVector *vector = char_vector_new(2);
+    CharVector *cpy_vector = char_vector_new(2);
+
+    input(vector, cpy_vector, string);
 }
 
 void input(CharVector *vector, CharVector *cpy_vector, FILE *string) {
-  char b;
-  while ((b = fgetc(string)) != EOF) {
-    if (b != '\n') {
-      char_vector_push_back(vector, b);
+    char b;
+    while ((b = fgetc(string)) != EOF) {
+        if (b != '\n') {
+            char_vector_push_back(vector, b);
+        }
     }
-  }
 
-  for (int i = 0; i < vector->size; i++) {
-    char_vector_push_back(cpy_vector, vector->data[i]);
-  }
+    for (int i = 0; i < vector->size; i++) {
+        char_vector_push_back(cpy_vector, vector->data[i]);
+    }
 }
