@@ -3,7 +3,8 @@
 
 #include <lib/char_vector.h>
 
-CharVector* char_vector_new(size_t capacity) {
+CharVector* char_vector_new(size_t capacity)
+{
     CharVector* darr = (CharVector*)malloc(sizeof(CharVector));
     if (darr == NULL) {
         return NULL;
@@ -16,30 +17,30 @@ CharVector* char_vector_new(size_t capacity) {
         return NULL;
     }
     return darr;
-    
 }
 
-void char_vector_free(CharVector* v) {
+void char_vector_free(CharVector* v)
+{
     free(v->data);
     v->data = NULL;
     free(v);
     v = NULL;
-
 }
 
-int char_vector_push_back(CharVector* v, char item) {
+int char_vector_push_back(CharVector* v, char item)
+{
     int flag = -1;
     if (v->size == v->capacity) {
-        v->data = (char*)realloc(v->data, v->size*2);
+        v->data = (char*)realloc(v->data, v->size * 2);
         if (v->data != NULL) {
             v->data[v->size] = item;
-            v->capacity = v->size*2;
+            v->capacity = v->size * 2;
             flag = 0;
-        }else {
+        } else {
             flag = -1;
         }
-        
-    }else {
+
+    } else {
         v->data[v->size] = item;
         flag = 0;
     }

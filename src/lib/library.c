@@ -1,47 +1,131 @@
-#include <string.h>
-#include <stdio.h>
 #include <ctype.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <lib/char_vector.h>
 #include <lib/library.h>
 
-#define MAX_STRING_SIZE 400
-
-int stok(char *src, char symb, char **strs) {
+int stok(char* src, char symb, char** strs)
+{
     int i = 0;
     int numstrs = 1;
     strs[i] = src;
     while (src[i] != '\0') {
-      if (src[i] == symb) {
-        src[i] = '\0';
-        strs[numstrs] = &(src[i]) + 1;
-        numstrs++;
-      }
-      i++;
+        if (src[i] == symb) {
+            src[i] = '\0';
+            strs[numstrs] = &(src[i]) + 1;
+            numstrs++;
+        }
+        i++;
     }
     return numstrs;
 }
 
-void unstok(char *str, char delim, char **ptr, int cnt) {
+void unstok(char* str, char delim, char** ptr, int cnt)
+{
     for (int i = 1; i < cnt; i++) {
-      *(ptr[i] - 1) = delim;
+        *(ptr[i] - 1) = delim;
     }
 }
 
-void input(CharVector* vector, CharVector* cpy_vector, FILE* string)
+int get_type_of_text(char type)
+{
+    if (isdigit(type) == 0) {
+        return NOT_NUMBER;
+    } else {
+        return ((int)type) - 48;
+    }
+}
+
+FILE* opening_file(FILE* string, int type, int random_num_of_future_text)
+{
+    if (type == 1) {
+        switch (random_num_of_future_text) {
+        case 1:
+            string = fopen("texts/ENG/eng1.txt", "r");
+            break;
+        case 2:
+            string = fopen("texts/ENG/eng2.txt", "r");
+            break;
+        case 3:
+            string = fopen("texts/ENG/eng3.txt", "r");
+            break;
+        case 4:
+            string = fopen("texts/ENG/eng4.txt", "r");
+            break;
+        case 5:
+            string = fopen("texts/ENG/eng5.txt", "r");
+            break;
+        case 6:
+            string = fopen("texts/ENG/eng6.txt", "r");
+            break;
+        case 7:
+            string = fopen("texts/ENG/eng7.txt", "r");
+            break;
+        case 8:
+            string = fopen("texts/ENG/eng8.txt", "r");
+            break;
+        case 9:
+            string = fopen("texts/ENG/eng9.txt", "r");
+            break;
+        case 10:
+            string = fopen("texts/ENG/eng10.txt", "r");
+            break;
+        }
+    } else if (type == 2) {
+        switch (random_num_of_future_text) {
+        case 1:
+            string = fopen("texts/SpecTexts/spc1.txt", "r");
+            break;
+        case 2:
+            string = fopen("texts/SpecTexts/spc2.txt", "r");
+            break;
+        case 3:
+            string = fopen("texts/SpecTexts/spc3.txt", "r");
+            break;
+        case 4:
+            string = fopen("texts/SpecTexts/spc4.txt", "r");
+            break;
+        case 5:
+            string = fopen("texts/SpecTexts/spc5.txt", "r");
+            break;
+        case 6:
+            string = fopen("texts/SpecTexts/spc6.txt", "r");
+            break;
+        case 7:
+            string = fopen("texts/SpecTexts/spc7.txt", "r");
+            break;
+        case 8:
+            string = fopen("texts/SpecTexts/spc8.txt", "r");
+            break;
+        case 9:
+            string = fopen("texts/SpecTexts/spc9.txt", "r");
+            break;
+        case 10:
+            string = fopen("texts/SpecTexts/spc10.txt", "r");
+            break;
+        }
+    } else {
+        return NULL;
+    }
+    return string;
+}
+
+int input(CharVector* vector, CharVector* cpy_vector, FILE* string)
 {
     char b;
+    int tmp = 0;
     while ((b = fgetc(string)) != EOF) {
         if (b != '\n') {
-            char_vector_push_back(vector, b);
+            tmp += char_vector_push_back(vector, b);
         }
     }
-
     for (int i = 0; i < vector->size; i++) {
-        char_vector_push_back(cpy_vector, vector->data[i]);
+        tmp += char_vector_push_back(cpy_vector, vector->data[i]);
     }
+    return tmp;
 }
 
 void output(CharVector* vector, CharVector* cpy_vector, int faults)
@@ -82,6 +166,8 @@ int process(CharVector* vector, CharVector* cpy_vector, int* faults)
             ms_cpy[u] = ms[u];
         }
 
+        count += strlen(words[i]);
+
         if (strcmp(ms_cpy, "~") == 0) {
             printf("%d\n", *faults);
             vector->size = count;
@@ -90,10 +176,8 @@ int process(CharVector* vector, CharVector* cpy_vector, int* faults)
             output(vector, cpy_vector, *faults);
             char_vector_free(vector);
             char_vector_free(cpy_vector);
-            return 1;
+            return EARLY_TERMINATION_OF_THE_PROGRAM;
         }
-
-        count += strlen(words[i]);
 
         for (int j = 0; j < strlen(words[i]); j++) {
             if (words[i][j] != ms_cpy[j]) {
@@ -111,5 +195,5 @@ int process(CharVector* vector, CharVector* cpy_vector, int* faults)
     system("clear");
     unstok(vector->data, ' ', words, count_of_words);
     unstok(cpy_vector->data, ' ', words_cpy, count_of_words);
-    return 0;
+    return CORRECT_WORKING_OUT;
 }
