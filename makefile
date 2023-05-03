@@ -55,8 +55,5 @@ $(OBJ_DIR)/test/main.o: test/main.c
 $(OBJ_DIR)/test/parser_test.o: test/parser_test.c
 	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -c -o $@ $<
 
-run: all
-	$(APP_PATH) $(BIN_DIR)/geommi.txt
-
 clean:
 	$(RM) $(APP_PATH) $(TEST_PATH) $(OBJ_DIR)/*/*/*.[aod] $(OBJ_DIR)/test/*.[aod]
