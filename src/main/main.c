@@ -97,7 +97,8 @@ int main()
             break;
         }
     } else {
-        printf("you wrote not a digit of lang\n");
+        printf("you wrote not a digit\n");
+        return -1;
     }
 
     if (string == NULL) {
@@ -142,7 +143,7 @@ void input(CharVector* vector, CharVector* cpy_vector, FILE* string)
 void output(CharVector* vector, CharVector* cpy_vector, int faults)
 {
     system("clear");
-    for (int i = 0; i < vector->size; i++) {
+    for (int i = 0; i <= vector->size; i++) {
         if (vector->data[i] != cpy_vector->data[i]) {
             printf("\033[91m%c\033[91m", cpy_vector->data[i]);
         } else {
