@@ -4,6 +4,9 @@
 
 #include <ctest.h>
 
+#include <lib/char_vector.h>
+#include <lib/library.h>
+
 int main(int argc, const char** argv)
 {
     return ctest_main(argc, argv);

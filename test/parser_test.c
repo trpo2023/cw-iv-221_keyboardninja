@@ -7,7 +7,7 @@
 #include <lib/char_vector.h>
 #include <lib/library.h>
 
-CTEST(checknput, char_vector_new)
+CTEST(char_vector, char_vector_new)
 {
     CharVector* new1 = char_vector_new(12);
     CharVector* new2 = char_vector_new(12);
@@ -28,7 +28,7 @@ CTEST(checknput, char_vector_new)
     char_vector_free(new5);
 }
 
-CTEST(checknput, char_vector_push_back)
+CTEST(char_vector, char_vector_push_back)
 {
     CharVector* new1 = char_vector_new(12);
     CharVector* new2 = char_vector_new(12);
