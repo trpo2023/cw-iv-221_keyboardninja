@@ -2,11 +2,11 @@
 
 #include <stddef.h>
 
-typedef struct CharVector{
+typedef struct CharVector {
     char* data;
     size_t size;
     size_t capacity;
-}CharVector;
+} CharVector;
 
 CharVector* char_vector_new(size_t capacity);
 

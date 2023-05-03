@@ -40,10 +40,20 @@ $(LIB_PATH): $(LIB_OBJECTS)
 	ar rcs $@ $^
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(DEPSFLAGS) -c -o $@ $< -lm
+	$(CC) $(CFLAGS) $(DEPSFLAGS) -c -o $@ $< 
 
-run: all
-	$(APP_PATH) $(BIN_DIR)/geommi.txt
+
+test: $(LIB_PATH) $(TEST_PATH)
+	$(TEST_PATH)
+
+$(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH)
+	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -o $@ $^ 
+
+$(OBJ_DIR)/test/main.o: test/main.c
+	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)/test/parser_test.o: test/parser_test.c
+	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -c -o $@ $<
 
 clean:
 	$(RM) $(APP_PATH) $(TEST_PATH) $(OBJ_DIR)/*/*/*.[aod] $(OBJ_DIR)/test/*.[aod]
