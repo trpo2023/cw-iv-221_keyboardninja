@@ -113,19 +113,17 @@ FILE* opening_file(FILE* string, int type, int random_num_of_future_text)
     return string;
 }
 
-int input(CharVector* vector, CharVector* cpy_vector, FILE* string)
+void input(CharVector* vector, CharVector* cpy_vector, FILE* string)
 {
     char b;
-    int tmp = 0;
     while ((b = fgetc(string)) != EOF) {
         if (b != '\n') {
-            tmp += char_vector_push_back(vector, b);
+            char_vector_push_back(vector, b);
         }
     }
     for (int i = 0; i < vector->size; i++) {
-        tmp += char_vector_push_back(cpy_vector, vector->data[i]);
+        char_vector_push_back(cpy_vector, vector->data[i]);
     }
-    return tmp;
 }
 
 void output(CharVector* vector, CharVector* cpy_vector, int faults)

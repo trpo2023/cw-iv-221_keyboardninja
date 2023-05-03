@@ -1,1 +1,5 @@
 main.exe
+main_test.exe
+*.d
+*.o
+*.a
