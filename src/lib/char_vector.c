@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "char_vector.h"
+#include <lib/char_vector.h>
 
 CharVector* char_vector_new(size_t capacity) {
     CharVector* darr = (CharVector*)malloc(sizeof(CharVector));
@@ -45,25 +45,4 @@ int char_vector_push_back(CharVector* v, char item) {
     }
     v->size++;
     return flag;
-}
-
-int stok(char *src, char symb, char **strs) {
-    int i = 0;
-    int numstrs = 1;
-    strs[i] = src;
-    while (src[i] != '\0') {
-      if (src[i] == symb) {
-        src[i] = '\0';
-        strs[numstrs] = &(src[i]) + 1;
-        numstrs++;
-      }
-      i++;
-    }
-    return numstrs;
-}
-
-void unstok(char *str, char delim, char **ptr, int cnt) {
-    for (int i = 1; i < cnt; i++) {
-      *(ptr[i] - 1) = delim;
-    }
 }
