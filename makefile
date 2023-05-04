@@ -34,7 +34,7 @@ all: $(APP_PATH)
 
 
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
-	$(CC) $(CFLAGS) -o $@ $^ -lm
+	$(CC) $(CFLAGS) -o $@ $^
 
 $(LIB_PATH): $(LIB_OBJECTS)
 	ar rcs $@ $^
