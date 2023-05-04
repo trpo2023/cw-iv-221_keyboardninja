@@ -1,5 +1,4 @@
 bin/main
-bin/main_test
 *.d
 *.o
 *.a
