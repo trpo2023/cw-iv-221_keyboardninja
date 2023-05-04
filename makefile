@@ -47,7 +47,7 @@ test: $(LIB_PATH) $(TEST_PATH)
 	$(TEST_PATH)
 
 $(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH)
-	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -o $@ $^ 
+	$(CC) $(TESTFLAGS) $(CFLAGS) -o $@ $^ 
 
 $(OBJ_DIR)/test/main.o: test/main.c
 	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -c -o $@ $<
