@@ -113,7 +113,7 @@ FILE* opening_file(FILE* string, int type, int random_num_of_future_text)
     return string;
 }
 
-void input(CharVector* vector, CharVector* cpy_vector, FILE* string)
+void input(CharVector* vector, FILE* string)
 {
     char b;
     while ((b = fgetc(string)) != EOF) {
@@ -121,15 +121,12 @@ void input(CharVector* vector, CharVector* cpy_vector, FILE* string)
             char_vector_push_back(vector, b);
         }
     }
-    for (int i = 0; i < vector->size; i++) {
-        char_vector_push_back(cpy_vector, vector->data[i]);
-    }
 }
 
 void output(CharVector* vector, CharVector* cpy_vector, int faults)
 {
     system("clear");
-    for (int i = 0; i <= vector->size; i++) {
+    for (int i = 0; i < cpy_vector->size-1; i++) {
         if (vector->data[i] != cpy_vector->data[i]) {
             printf("\033[91m%c\033[91m", cpy_vector->data[i]);
         } else {
@@ -140,40 +137,40 @@ void output(CharVector* vector, CharVector* cpy_vector, int faults)
     printf("\033[39mYou was make a \033[91m%d\033[39m faults!\n", faults);
 }
 
-int process(CharVector* vector, CharVector* cpy_vector, int* faults)
+int process(CharVector* vector, CharVector* vector_cpy, int* faults)
 {
-    int count = 0;
     char* words[vector->size];
     int count_of_words = stok(vector->data, ' ', words);
 
-    char* words_cpy[vector->size];
-    stok(cpy_vector->data, ' ', words_cpy);
-
     for (int i = 0; i < count_of_words; i++) {
-        for (int r = 0; r < strlen(words[i]); r++) {
-            words_cpy[i][r] = ' ';
-        }
         char ms[MAX_STRING_SIZE];
         char ms_cpy[strlen(words[i])];
-
         system("clear");
         printf("%s\n", words[i]);
+        printf("\n");
         scanf("%s", ms);
 
         for (int u = 0; u <= strlen(words[i]); u++) {
             ms_cpy[u] = ms[u];
         }
 
-        count += strlen(words[i]);
+        if ((strlen(ms_cpy) < strlen(words[i])) && (strcmp(ms_cpy, "~") != 0)) {
+            for (int k = strlen(ms_cpy); k < strlen(words[i]); k++) {
+                ms_cpy[k] = '_';
+            }
+        }
+
+        for (int w = 0; w < strlen(words[i]); w++) {
+            char_vector_push_back(vector_cpy, ms_cpy[w]);
+        }
+        char_vector_push_back(vector_cpy, ' ');
 
         if (strcmp(ms_cpy, "~") == 0) {
-            printf("%d\n", *faults);
-            vector->size = count;
+            vector_cpy->size = strlen(vector_cpy->data);
             unstok(vector->data, ' ', words, count_of_words);
-            unstok(cpy_vector->data, ' ', words_cpy, count_of_words);
-            output(vector, cpy_vector, *faults);
+            output(vector, vector_cpy, *faults);
             char_vector_free(vector);
-            char_vector_free(cpy_vector);
+            char_vector_free(vector_cpy);
             return EARLY_TERMINATION_OF_THE_PROGRAM;
         }
 
@@ -182,16 +179,8 @@ int process(CharVector* vector, CharVector* cpy_vector, int* faults)
                 (*faults) += 1;
             }
         }
-
-        if (strlen(ms_cpy) < strlen(words[i])) {
-            for (int k = strlen(ms_cpy); k < strlen(words[i]); k++) {
-                ms_cpy[k] = '_';
-            }
-        }
-        strcpy(words_cpy[i], ms_cpy);
     }
     system("clear");
     unstok(vector->data, ' ', words, count_of_words);
-    unstok(cpy_vector->data, ' ', words_cpy, count_of_words);
     return CORRECT_WORKING_OUT;
 }

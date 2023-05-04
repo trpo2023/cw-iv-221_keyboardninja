@@ -15,7 +15,7 @@ int get_type_of_text(char type);
 
 FILE* opening_file(FILE* string, int type, int random_num_of_future_text);
 
-void input(CharVector* vector, CharVector* cpy_vector, FILE* string);
+void input(CharVector* vector, FILE* string);
 
 void output(CharVector* vector, CharVector* cpy_vector, int faults);
 

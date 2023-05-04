@@ -33,9 +33,9 @@ int main()
     CharVector* vector = char_vector_new(2);
     CharVector* cpy_vector = char_vector_new(2);
 
-    input(vector, cpy_vector, string);
+    input(vector, string);
 
-    int faults = CORRECT_WORKING_OUT;
+    int faults = 0;
 
     int tmp2 = process(vector, cpy_vector, &faults);
     if (tmp2 == EARLY_TERMINATION_OF_THE_PROGRAM) {
