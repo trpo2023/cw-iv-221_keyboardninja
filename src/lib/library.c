@@ -126,7 +126,7 @@ void input(CharVector* vector, FILE* string)
 void output(CharVector* vector, CharVector* cpy_vector, int faults)
 {
     system("clear");
-    for (int i = 0; i < cpy_vector->size-1; i++) {
+    for (int i = 0; i < cpy_vector->size - 1; i++) {
         if (vector->data[i] != cpy_vector->data[i]) {
             printf("\033[91m%c\033[91m", cpy_vector->data[i]);
         } else {
