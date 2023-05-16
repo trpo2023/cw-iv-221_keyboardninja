@@ -169,9 +169,9 @@ int process(CharVector* vector, CharVector* vector_cpy, int* faults)
         char_vector_push_back(vector_cpy, ' ');
 
         if (strcmp(ms_cpy, "~") == 0) {
+            time_t process_time_finish = time(NULL);
             vector_cpy->size = strlen(vector_cpy->data);
             unstok(vector->data, ' ', words, count_of_words);
-            time_t process_time_finish = time(NULL);
             output(vector,
                    vector_cpy,
                    *faults,
