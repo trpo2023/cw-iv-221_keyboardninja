@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <lib/char_vector.h>
 #include <lib/library.h>
@@ -123,7 +124,7 @@ void input(CharVector* vector, FILE* string)
     }
 }
 
-void output(CharVector* vector, CharVector* cpy_vector, int faults)
+void output(CharVector* vector, CharVector* cpy_vector, int faults, time_t time)
 {
     system("clear");
     for (int i = 0; i < cpy_vector->size - 1; i++) {
@@ -134,13 +135,15 @@ void output(CharVector* vector, CharVector* cpy_vector, int faults)
         }
     }
     printf("\n\n");
-    printf("\033[39mYou was make a \033[91m%d\033[39m faults!\n", faults);
+    printf("\033[39mTime of writting \033[91m%ld\033[39m seconds\n", time);
+    printf("\033[39mYou've made \033[91m%d\033[39m mistakes!\n", faults);
 }
 
 int process(CharVector* vector, CharVector* vector_cpy, int* faults)
 {
     char* words[vector->size];
     int count_of_words = stok(vector->data, ' ', words);
+    time_t process_time_start = time(NULL);
 
     for (int i = 0; i < count_of_words; i++) {
         char ms[MAX_STRING_SIZE];
@@ -168,7 +171,11 @@ int process(CharVector* vector, CharVector* vector_cpy, int* faults)
         if (strcmp(ms_cpy, "~") == 0) {
             vector_cpy->size = strlen(vector_cpy->data);
             unstok(vector->data, ' ', words, count_of_words);
-            output(vector, vector_cpy, *faults);
+            time_t process_time_finish = time(NULL);
+            output(vector,
+                   vector_cpy,
+                   *faults,
+                   (process_time_finish - process_time_start));
             char_vector_free(vector);
             char_vector_free(vector_cpy);
             return EARLY_TERMINATION_OF_THE_PROGRAM;

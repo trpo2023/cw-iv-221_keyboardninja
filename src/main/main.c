@@ -36,14 +36,21 @@ int main()
     input(vector, string);
 
     int faults = 0;
+    time_t process_time_start, process_time_finish;
 
+    process_time_start = time(NULL);
     int tmp2 = process(vector, cpy_vector, &faults);
+    process_time_finish = time(NULL);
+
     if (tmp2 == EARLY_TERMINATION_OF_THE_PROGRAM) {
         fclose(string);
         return CORRECT_WORKING_OUT;
     }
 
-    output(vector, cpy_vector, faults);
+    output(vector,
+           cpy_vector,
+           faults,
+           (process_time_finish - process_time_start));
 
     char_vector_free(vector);
     char_vector_free(cpy_vector);

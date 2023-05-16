@@ -17,6 +17,6 @@ FILE* opening_file(FILE* string, int type, int random_num_of_future_text);
 
 void input(CharVector* vector, FILE* string);
 
-void output(CharVector* vector, CharVector* cpy_vector, int faults);
+void output(CharVector* vector, CharVector* cpy_vector, int faults, time_t);
 
 int process(CharVector* vector, CharVector* cpy_vector, int* faults);
