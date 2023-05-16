@@ -172,7 +172,10 @@ int process(CharVector* vector, CharVector* vector_cpy, int* faults)
             vector_cpy->size = strlen(vector_cpy->data);
             unstok(vector->data, ' ', words, count_of_words);
             time_t process_time_finish = time(NULL);
-            output(vector, vector_cpy, *faults, (process_time_finish - process_time_start));
+            output(vector,
+                   vector_cpy,
+                   *faults,
+                   (process_time_finish - process_time_start));
             char_vector_free(vector);
             char_vector_free(vector_cpy);
             return EARLY_TERMINATION_OF_THE_PROGRAM;
