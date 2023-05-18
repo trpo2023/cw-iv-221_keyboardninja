@@ -124,7 +124,12 @@ void input(CharVector* vector, FILE* string)
     }
 }
 
-void output(CharVector* vector, CharVector* cpy_vector, int faults, time_t time)
+void output(
+        CharVector* vector,
+        CharVector* cpy_vector,
+        int faults,
+        time_t time,
+        int count_of_letters)
 {
     system("clear");
     for (int i = 0; i < cpy_vector->size - 1; i++) {
@@ -137,14 +142,19 @@ void output(CharVector* vector, CharVector* cpy_vector, int faults, time_t time)
     printf("\n\n");
     printf("\033[39mTime of writting \033[91m%ld\033[39m seconds\n", time);
     printf("\033[39mYou've made \033[91m%d\033[39m mistakes!\n", faults);
+    printf("typing speed - %.1f symb/min\n",
+           ((float)count_of_letters / (float)time) * 60);
 }
 
-int process(CharVector* vector, CharVector* vector_cpy, int* faults)
+int process(
+        CharVector* vector,
+        CharVector* vector_cpy,
+        int* faults,
+        int* count_of_letters)
 {
     char* words[vector->size];
     int count_of_words = stok(vector->data, ' ', words);
     time_t process_time_start = time(NULL);
-
     for (int i = 0; i < count_of_words; i++) {
         char ms[MAX_STRING_SIZE];
         char ms_cpy[strlen(words[i])];
@@ -175,7 +185,8 @@ int process(CharVector* vector, CharVector* vector_cpy, int* faults)
             output(vector,
                    vector_cpy,
                    *faults,
-                   (process_time_finish - process_time_start));
+                   (process_time_finish - process_time_start),
+                   (*count_of_letters) - (*faults));
             char_vector_free(vector);
             char_vector_free(vector_cpy);
             return EARLY_TERMINATION_OF_THE_PROGRAM;
@@ -186,6 +197,7 @@ int process(CharVector* vector, CharVector* vector_cpy, int* faults)
                 (*faults) += 1;
             }
         }
+        (*count_of_letters) += strlen(words[i]);
     }
     system("clear");
     unstok(vector->data, ' ', words, count_of_words);
