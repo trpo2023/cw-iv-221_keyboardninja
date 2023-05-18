@@ -51,7 +51,8 @@ int main()
     output(vector,
            cpy_vector,
            faults,
-           (process_time_finish - process_time_start), count_of_letters-faults);
+           (process_time_finish - process_time_start),
+           count_of_letters - faults);
 
     char_vector_free(vector);
     char_vector_free(cpy_vector);
