@@ -2,3 +2,4 @@
 *.o
 *.a
 bin/main_test
+bin/main
