@@ -131,6 +131,7 @@ void output(
         time_t time,
         int count_of_letters)
 {
+    float symbols_per_sec = ((float)count_of_letters / (float)time) * 60;
     system("clear");
     for (int i = 0; i < cpy_vector->size - 1; i++) {
         if (vector->data[i] != cpy_vector->data[i]) {
@@ -140,10 +141,20 @@ void output(
         }
     }
     printf("\n\n");
-    printf("\033[39mTime of writting \033[91m%ld\033[39m seconds\n", time);
+    printf("\033[39mTime of typing \033[91m%ld\033[39m seconds\n", time);
+
+    if (symbols_per_sec < 220.0) {
+        printf("Typing speed - \033[91m%.1f\033[39m symb/min\n",
+               symbols_per_sec);
+    } else if ((symbols_per_sec > 220.0) && (symbols_per_sec < 400.0)) {
+        printf("Typing speed - \033[95m%.1f\033[39m symb/min\n",
+               symbols_per_sec);
+    } else if (symbols_per_sec > 400.0) {
+        printf("Typing speed - \033[92m%.1f\033[39m symb/min\n",
+               symbols_per_sec);
+    }
+
     printf("\033[39mYou've made \033[91m%d\033[39m mistakes!\n", faults);
-    printf("typing speed - %.1f symb/min\n",
-           ((float)count_of_letters / (float)time) * 60);
 }
 
 int process(
